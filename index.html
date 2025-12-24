@@ -7,7 +7,6 @@
     
     <link rel="icon" type="image/png" href="Z.png">
     <style>
-        
         /* --- 1. Глобальные настройки (Темная тема) --- */
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -107,11 +106,97 @@
             border: 4px solid #333;
         }
 
-        /* --- 4. Крупные работы (Showcase) --- */
-        .showcase-section {
-            padding: 60px 0;
+        /* --- Стили для слайдера --- */
+        .slider-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
         }
-        
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 500px; /* Высота слайдера, можно настроить */
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slide .project-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            color: #e0e0e0;
+        }
+
+        /* Кнопки навигации */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+
+        .slider-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .prev-btn {
+            left: 20px;
+        }
+
+        .next-btn {
+            right: 20px;
+        }
+
+        /* Индикаторы (точки) */
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background: #e0e0e0;
+        }
+
+        /* --- 5. Галерея (Мелкие работы) --- */
         .section-title {
             font-size: 2rem;
             margin-bottom: 40px;
@@ -119,30 +204,6 @@
             padding-left: 20px;
         }
 
-        .big-project {
-            margin-bottom: 60px;
-        }
-
-        .big-project img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.5s;
-        }
-
-        .big-project img:hover {
-            transform: scale(1.01); /* Легкое увеличение */
-        }
-
-        .project-info {
-            padding: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            color: #888;
-        }
-
-        /* --- 5. Галерея (Мелкие работы) --- */
         .gallery-grid {
             display: grid;
             /* Сетка: минимум 300px ширина картинки */
@@ -193,6 +254,14 @@
             .about-content { flex-direction: column-reverse; text-align: center; }
             .profile-img { width: 200px; height: 200px; }
             .section-title { font-size: 1.5rem; }
+            .slider-track {
+                height: 350px;
+            }
+            .slider-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
         }
     </style>
 </head>
@@ -229,30 +298,53 @@
         </div>
     </section>
 
-    <!-- 3. Основные (крупные) работы -->
+    <!-- 3. Слайдер с крупными работами -->
     <section class="showcase-section" id="showcase">
         <div class="container">
             <h3 class="section-title">Избранные проекты</h3>
-
-            <!-- Большой проект 1 -->
-            <div class="big-project">
-                <!-- Вставьте сюда ссылку на вашу КРУПНУЮ, красивую картинку -->
-                <img src="лего.png" alt="Project 1">
-                <div class="project-info">
-                    <span>Lego</span>
-                    <span>Blender + Photoshop</span>
+            
+            <div class="slider-container">
+                <!-- Кнопка "Назад" -->
+                <button class="slider-btn prev-btn" aria-label="Предыдущий слайд">‹</button>
+                
+                <!-- Область слайдов -->
+                <div class="slider-track">
+                    <!-- Слайд 1 -->
+                    <div class="slide">
+                        <img src="лего.png" alt="Project 1">
+                        <div class="project-info">
+                            <span>Lego</span>
+                            <span>Blender + Photoshop</span>
+                        </div>
+                    </div>
+                    <!-- Слайд 2 -->
+                    <div class="slide">
+                        <img src="порш.jpg" alt="Project 2">
+                        <div class="project-info">
+                            <span>Porshe 911</span>
+                            <span>Blender</span>
+                        </div>
+                    </div>
+                    <!-- Добавьте здесь другие слайды -->
+                    <!-- Пример дополнительного слайда:
+                    <div class="slide">
+                        <img src="your-image3.jpg" alt="Project 3">
+                        <div class="project-info">
+                            <span>Project 3</span>
+                            <span>Tools Used</span>
+                        </div>
+                    </div>
+                    -->
                 </div>
+                
+                <!-- Кнопка "Вперед" -->
+                <button class="slider-btn next-btn" aria-label="Следующий слайд">›</button>
             </div>
-
-            <!-- Большой проект 2 -->
-            <div class="big-project">
-                <img src="порш.jpg" alt="Project 2">
-                <div class="project-info">
-                    <span>Porshe 911</span>
-                    <span>Blender</span>
-                </div>
+            
+            <!-- Индикаторы (точки) -->
+            <div class="slider-dots">
+                <!-- Точки будут созданы через JavaScript -->
             </div>
-
         </div>
     </section>
 
@@ -284,71 +376,75 @@
             <p style="font-size: 0.8rem; color: #555;">&copy; 2025 СВЯТ Portfolio</p>
         </div>
     </footer>
+
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const track = document.querySelector('.slider-track');
-        const slides = Array.from(document.querySelectorAll('.slide'));
-        const dotsContainer = document.querySelector('.slider-dots');
-        
-        if (!track || slides.length === 0) return;
-        
-        let currentSlide = 0;
-        
-        // Создаем точки
-        slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(index));
-            dotsContainer.appendChild(dot);
-        });
-        
-        const dots = document.querySelectorAll('.dot');
-        
-        // Функция обновления слайдера
-        function updateSlider() {
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        document.addEventListener('DOMContentLoaded', function() {
+            const track = document.querySelector('.slider-track');
+            const slides = Array.from(document.querySelectorAll('.slide'));
+            const dotsContainer = document.querySelector('.slider-dots');
             
-            // Обновляем активную точку
-            dots.forEach((dot, idx) => {
-                dot.classList.toggle('active', idx === currentSlide);
+            // Если элементов слайдера нет - выходим
+            if (!track || slides.length === 0) return;
+            
+            let currentSlide = 0;
+            
+            // Создаем точки-индикаторы
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
             });
-        }
-        
-        // Перейти к конкретному слайду
-        function goToSlide(n) {
-            currentSlide = (n + slides.length) % slides.length;
-            updateSlider();
-        }
-        
-        // Следующий слайд
-        document.querySelector('.next-btn')?.addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            updateSlider();
-        });
-        
-        // Предыдущий слайд
-        document.querySelector('.prev-btn')?.addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            updateSlider();
-        });
-        
-        // Автопрокрутка (опционально)
-        let slideInterval = setInterval(() => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            updateSlider();
-        }, 5000); // Меняем каждые 5 секунд
-        
-        // Останавливаем автопрокрутку при наведении
-        const slider = document.querySelector('.slider-container');
-        slider?.addEventListener('mouseenter', () => clearInterval(slideInterval));
-        slider?.addEventListener('mouseleave', () => {
-            slideInterval = setInterval(() => {
+            
+            const dots = document.querySelectorAll('.dot');
+            
+            // Функция обновления слайдера
+            function updateSlider() {
+                track.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                // Обновляем активную точку
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === currentSlide);
+                });
+            }
+            
+            // Перейти к конкретному слайду
+            function goToSlide(n) {
+                currentSlide = (n + slides.length) % slides.length;
+                updateSlider();
+            }
+            
+            // Следующий слайд
+            document.querySelector('.next-btn')?.addEventListener('click', () => {
                 currentSlide = (currentSlide + 1) % slides.length;
                 updateSlider();
-            }, 5000);
+            });
+            
+            // Предыдущий слайд
+            document.querySelector('.prev-btn')?.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                updateSlider();
+            });
+            
+            // Автопрокрутка (опционально, раскомментируйте если нужно)
+            /*
+            let slideInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateSlider();
+            }, 5000); // Меняем каждые 5 секунд
+            
+            // Останавливаем автопрокрутку при наведении
+            const slider = document.querySelector('.slider-container');
+            slider?.addEventListener('mouseenter', () => clearInterval(slideInterval));
+            slider?.addEventListener('mouseleave', () => {
+                slideInterval = setInterval(() => {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    updateSlider();
+                }, 5000);
+            });
+            */
         });
-    });
-</script>
+    </script>
 </body>
 </html>
