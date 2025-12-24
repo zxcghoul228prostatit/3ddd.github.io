@@ -24,15 +24,26 @@
             padding: 0 20px;
         }
 
-        /* --- 2. Первый экран (Hero Section) --- */
-        .hero {
-            height: 90vh; /* Почти на весь экран */
+         .hero {
+            height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: radial-gradient(circle at center, #2a2a2a 0%, #121212 100%);
+            
+            /* ВОТ ЗДЕСЬ МАГИЯ: */
+            
+            /* Сначала идет затемнение (0.6 - это 60% черноты), потом ссылка на картинку */
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('бмв');
+            
+            /* Настройки, чтобы картинка покрывала весь экран и не повторялась */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* Эффект, чтобы картинка стояла на месте при прокрутке (параллакс) */
+            background-attachment: fixed; 
         }
 
         .hero h1 {
@@ -210,7 +221,7 @@
                     </p>
                 </div>
                 <!-- Замените ссылку ниже на ваше фото профиля -->
-                <img src="бмв" alt="Моё фото" class="profile-img">
+                <img src="автобус" alt="Моё фото" class="profile-img">
             </div>
         </div>
     </section>
@@ -223,7 +234,7 @@
             <!-- Большой проект 1 -->
             <div class="big-project">
                 <!-- Вставьте сюда ссылку на вашу КРУПНУЮ, красивую картинку -->
-                <img src="лего" alt="Project 1">
+                <img src="лего.png" alt="Project 1">
                 <div class="project-info">
                     <span>Lego</span>
                     <span>Blender + Photoshop</span>
@@ -232,7 +243,7 @@
 
             <!-- Большой проект 2 -->
             <div class="big-project">
-                <img src="автобус" alt="Project 2">
+                <img src="порш.png" alt="Project 2">
                 <div class="project-info">
                     <span>Lost Ruins</span>
                     <span>Blender+Substen Painter 3D</span>
@@ -248,10 +259,10 @@
         <div class="gallery-grid">
             <!-- 6 маленьких фото. Замените src="..." на свои файлы -->
             <div class="grid-item"><img src="телега" alt="Art 1"></div>
-            <div class="grid-item"><img src="дом" alt="Art 2"></div>
-            <div class="grid-item"><img src="https://picsum.photos/id/30/400/400" alt="Art 3"></div>
-            <div class="grid-item"><img src="https://picsum.photos/id/40/400/400" alt="Art 4"></div>
-            <div class="grid-item"><img src="https://picsum.photos/id/50/400/400" alt="Art 5"></div>
+            <div class="grid-item"><img src="дом1.jpg" alt="Art 2"></div>
+            <div class="grid-item"><img src="проект2.png" alt="Art 3"></div>
+            <div class="grid-item"><img src="сто.jpg" alt="Art 4"></div>
+            <div class="grid-item"><img src="дайсон.png" alt="Art 5"></div>
             <div class="grid-item"><img src="https://picsum.photos/id/60/400/400" alt="Art 6"></div>
         </div>
     </div>
