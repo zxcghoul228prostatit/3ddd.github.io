@@ -3,138 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя Фотогалерея</title>
+    <title>3D Artist Portfolio</title>
     <style>
-        /* 1. Базовые настройки стиля */
+        /* --- 1. Глобальные настройки (Темная тема) --- */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            /* Это нужно, чтобы подвал всегда был снизу */
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            background-color: #121212; /* Почти черный фон */
+            color: #e0e0e0; /* Светло-серый текст */
+            line-height: 1.6;
         }
 
-        /* 2. Верхняя шапка (Header) - название сайта */
-        header {
-            background-color: #fff;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            color: #2c3e50;
-        }
-
-        header p {
-            color: #7f8c8d;
-        }
-
-        /* 3. Галерея фотографий */
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        
+        /* Контейнер, ограничивающий ширину контента */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            flex: 1; /* Растягивает блок, толкая подвал вниз */
+            padding: 0 20px;
         }
 
-        .gallery {
-            display: grid;
-            /* Автоматическая сетка: фото подстраиваются под экран */
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+        /* --- 2. Первый экран (Hero Section) --- */
+        .hero {
+            height: 90vh; /* Почти на весь экран */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #2a2a2a 0%, #121212 100%);
         }
 
-        .photo-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+        .hero h1 {
+            font-size: 4rem; /* Огромный заголовок */
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        .photo-card:hover {
-            transform: translateY(-5px); /* Эффект парения при наведении */
+        .hero p {
+            font-size: 1.5rem;
+            color: #888;
+            margin-bottom: 30px;
         }
 
-        .photo-card img {
+        .btn {
+            padding: 15px 40px;
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* --- 3. Блок "Обо мне" --- */
+        .about-section {
+            padding: 80px 0;
+            background-color: #1a1a1a;
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        
+        /* Ваше фото профиля (заглушка) */
+        .profile-img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 50%; /* Круглое фото */
+            filter: grayscale(100%); /* Ч/Б эффект */
+            border: 4px solid #333;
+        }
+
+        /* --- 4. Крупные работы (Showcase) --- */
+        .showcase-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            border-left: 5px solid #fff;
+            padding-left: 20px;
+        }
+
+        .big-project {
+            margin-bottom: 60px;
+        }
+
+        .big-project img {
             width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.5s;
+        }
+
+        .big-project img:hover {
+            transform: scale(1.01); /* Легкое увеличение */
+        }
+
+        .project-info {
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+        }
+
+        /* --- 5. Галерея (Мелкие работы) --- */
+        .gallery-grid {
+            display: grid;
+            /* Сетка: минимум 300px ширина картинки */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            padding-bottom: 80px;
+        }
+
+        .grid-item {
+            position: relative;
+            overflow: hidden;
             height: 250px;
-            object-fit: cover; /* Чтобы фото не сплющивались */
-            display: block;
+            cursor: pointer;
         }
 
-        .photo-desc {
-            padding: 15px;
-            text-align: center;
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            filter: brightness(0.8);
         }
 
-        /* 4. Нижняя шапка (Footer) */
+        .grid-item:hover img {
+            transform: scale(1.1); /* Зум при наведении */
+            filter: brightness(1);
+        }
+
+        /* --- 6. Подвал (Footer) --- */
         footer {
-            background-color: #2c3e50; /* Темно-синий цвет */
-            color: white;
+            background-color: #000;
+            padding: 40px 0;
             text-align: center;
-            padding: 20px;
-            margin-top: auto; /* Прижимает футер к низу */
+            border-top: 1px solid #333;
         }
 
-        footer a {
-            color: #3498db;
-            text-decoration: none;
+        footer .socials a {
+            margin: 0 15px;
+            font-size: 1.2rem;
+            color: #888;
+        }
+
+        footer .socials a:hover { color: #fff; }
+
+        /* Адаптивность для телефонов */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .about-content { flex-direction: column-reverse; text-align: center; }
+            .profile-img { width: 200px; height: 200px; }
+            .section-title { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Верхняя часть -->
-    <header>
-        <h1>Моё Портфолио</h1>
-        <p>Лучшие моменты и кадры</p>
+    <!-- 1. Главный экран -->
+    <header class="hero">
+        <div class="container">
+            <h1>ZXC GHOUL</h1>
+            <p>3D Artist / Environment Designer / Concept Art</p>
+            <a href="#showcase" class="btn">Смотреть работы</a>
+        </div>
     </header>
 
-    <!-- Основная часть с фото -->
-    <div class="container">
-        <div class="gallery">
-            
-            <!-- Фото 1 -->
-            <div class="photo-card">
-                <!-- Я вставил случайные картинки для примера. Замените ссылки src="" на свои файлы -->
-                <img src="3ocMlhQe2W4.jpg" alt="Природа">
-                <div class="photo-desc">Красивый пейзаж</div>
+    <!-- 2. Блок Обо мне -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Обо мне</h2>
+                    <p>
+                        Привет! Я специализируюсь на создании реалистичного 3D-окружения и персонажей. 
+                        Работаю в Blender, Maya и ZBrush. Моя страсть — создавать миры, 
+                        которые рассказывают историю без слов.
+                    </p>
+                    <p>
+                        Занимаюсь 3D графикой уже более 3-х лет. Всегда открыт к интересным коллаборациям 
+                        и заказам на фрилансе.
+                    </p>
+                </div>
+                <!-- Замените ссылку ниже на ваше фото профиля -->
+                <img src="https://picsum.photos/id/1005/300/300" alt="Моё фото" class="profile-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Основные (крупные) работы -->
+    <section class="showcase-section" id="showcase">
+        <div class="container">
+            <h3 class="section-title">Избранные проекты</h3>
+
+            <!-- Большой проект 1 -->
+            <div class="big-project">
+                <!-- Вставьте сюда ссылку на вашу КРУПНУЮ, красивую картинку -->
+                <img src="https://picsum.photos/id/1033/1200/600" alt="Project 1">
+                <div class="project-info">
+                    <span>Cyberpunk City</span>
+                    <span>Blender + Photoshop</span>
+                </div>
             </div>
 
-            <!-- Фото 2 -->
-            <div class="photo-card">
-                <img src="Святу.png" alt="Собака">
-                <div class="photo-desc">Мой питомец</div>
-            </div>
-
-            <!-- Фото 3 -->
-            <div class="photo-card">
-                <img src="2.png" alt="Город">
-                <div class="photo-desc">Прогулка по городу</div>
-            </div>
-
-             <!-- Фото 4 -->
-             <div class="photo-card">
-                <img src="Снимок экрана 2025-12-11 033010.png" alt="Кофе">
-                <div class="photo-desc">Утренний кофе</div>
+            <!-- Большой проект 2 -->
+            <div class="big-project">
+                <img src="https://picsum.photos/id/1016/1200/600" alt="Project 2">
+                <div class="project-info">
+                    <span>Lost Ruins</span>
+                    <span>Unreal Engine 5</span>
+                </div>
             </div>
 
         </div>
+    </section>
+
+    <!-- 4. Сетка с маленькими работами -->
+    <div class="container">
+        <h3 class="section-title">Скетчи и рендеры</h3>
+        <div class="gallery-grid">
+            <!-- 6 маленьких фото. Замените src="..." на свои файлы -->
+            <div class="grid-item"><img src="https://picsum.photos/id/10/400/400" alt="Art 1"></div>
+            <div class="grid-item"><img src="https://picsum.photos/id/20/400/400" alt="Art 2"></div>
+            <div class="grid-item"><img src="https://picsum.photos/id/30/400/400" alt="Art 3"></div>
+            <div class="grid-item"><img src="https://picsum.photos/id/40/400/400" alt="Art 4"></div>
+            <div class="grid-item"><img src="https://picsum.photos/id/50/400/400" alt="Art 5"></div>
+            <div class="grid-item"><img src="https://picsum.photos/id/60/400/400" alt="Art 6"></div>
+        </div>
     </div>
 
-    <!-- Нижняя шапка (Подвал) -->
+    <!-- 5. Подвал -->
     <footer>
-        <h3>Связаться со мной</h3>
-        <p>Телефон: +7 (999) 000-00-00 | Telegram: @my_nick</p>
-        <p>&copy; 2025 Все права защищены</p>
+        <div class="container">
+            <h2>Давайте работать вместе</h2>
+            <p>zxcghoul@example.com</p>
+            <div class="socials">
+                <a href="#">ArtStation</a>
+                <a href="#">Instagram</a>
+                <a href="#">VK</a>
+            </div>
+            <br>
+            <p style="font-size: 0.8rem; color: #555;">&copy; 2025 ZXC Ghoul Portfolio</p>
+        </div>
     </footer>
 
 </body>
