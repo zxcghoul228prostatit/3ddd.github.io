@@ -7,6 +7,7 @@
     
     <link rel="icon" type="image/png" href="Z.png">
     <style>
+        
         /* --- 1. Глобальные настройки (Темная тема) --- */
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -283,6 +284,71 @@
             <p style="font-size: 0.8rem; color: #555;">&copy; 2025 СВЯТ Portfolio</p>
         </div>
     </footer>
-
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const track = document.querySelector('.slider-track');
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const dotsContainer = document.querySelector('.slider-dots');
+        
+        if (!track || slides.length === 0) return;
+        
+        let currentSlide = 0;
+        
+        // Создаем точки
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+        
+        const dots = document.querySelectorAll('.dot');
+        
+        // Функция обновления слайдера
+        function updateSlider() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Обновляем активную точку
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentSlide);
+            });
+        }
+        
+        // Перейти к конкретному слайду
+        function goToSlide(n) {
+            currentSlide = (n + slides.length) % slides.length;
+            updateSlider();
+        }
+        
+        // Следующий слайд
+        document.querySelector('.next-btn')?.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlider();
+        });
+        
+        // Предыдущий слайд
+        document.querySelector('.prev-btn')?.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlider();
+        });
+        
+        // Автопрокрутка (опционально)
+        let slideInterval = setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlider();
+        }, 5000); // Меняем каждые 5 секунд
+        
+        // Останавливаем автопрокрутку при наведении
+        const slider = document.querySelector('.slider-container');
+        slider?.addEventListener('mouseenter', () => clearInterval(slideInterval));
+        slider?.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateSlider();
+            }, 5000);
+        });
+    });
+</script>
 </body>
 </html>
